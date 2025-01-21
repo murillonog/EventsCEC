@@ -1,8 +1,8 @@
-using System.Diagnostics;
-using EventsCEC.Models;
+using EventsCEC.App.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
-namespace EventsCEC.Controllers
+namespace EventsCEC.App.Controllers
 {
     public class HomeController : Controller
     {

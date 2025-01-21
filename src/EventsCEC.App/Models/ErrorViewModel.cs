@@ -1,4 +1,4 @@
-namespace EventsCEC.Models
+namespace EventsCEC.App.Models
 {
     public class ErrorViewModel
     {

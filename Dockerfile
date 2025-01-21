@@ -1,22 +1,23 @@
-#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 WORKDIR /app
+
+# Restore as distinct layers
+COPY EventsCEC.sln ./
+COPY ./EventsCEC.App/EventsCEC.App.csproj ./EventsCEC.App/
+COPY ./EventsCEC.Application/EventsCEC.Application.csproj ./EventsCEC.Application/
+COPY ./EventsCEC.Domain/EventsCEC.Domain.csproj ./EventsCEC.Domain/
+COPY ./EventsCEC.Infra.Data/EventsCEC.Infra.Data.csproj ./EventsCEC.Infra.Data/
+COPY ./EventsCEC.Infra.IoC/EventsCEC.Infra.IoC.csproj ./EventsCEC.Infra.IoC/
+RUN dotnet restore
+
+# Build and publish a release
+COPY . ./
+RUN dotnet publish -c Release -o out
+
+# Build runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+WORKDIR /app
+COPY --from=build-env /app/out .
 EXPOSE 80
-EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR /src
-COPY ["EventsCEC/EventsCEC.csproj", "EventsCEC/"]
-RUN dotnet restore "EventsCEC/EventsCEC.csproj"
-COPY . .
-WORKDIR "EventsCEC"
-RUN dotnet build "EventsCEC.csproj" -c Release -o /app/build
-
-FROM build AS publish
-RUN dotnet publish "EventsCEC.csproj" -c Release -o /app/publish /p:UseAppHost=false
-
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "EventsCEC.dll"]
+ENTRYPOINT ["dotnet", "EventsCEC.App.dll"]
