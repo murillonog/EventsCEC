@@ -3,11 +3,11 @@ WORKDIR /app
 
 # Restore as distinct layers
 COPY EventsCEC.sln ./
-COPY ./EventsCEC.App/EventsCEC.App.csproj ./EventsCEC.App/
-COPY ./EventsCEC.Application/EventsCEC.Application.csproj ./EventsCEC.Application/
-COPY ./EventsCEC.Domain/EventsCEC.Domain.csproj ./EventsCEC.Domain/
-COPY ./EventsCEC.Infra.Data/EventsCEC.Infra.Data.csproj ./EventsCEC.Infra.Data/
-COPY ./EventsCEC.Infra.IoC/EventsCEC.Infra.IoC.csproj ./EventsCEC.Infra.IoC/
+COPY ./src/EventsCEC.App/EventsCEC.App.csproj ./src/EventsCEC.App/
+COPY ./src/EventsCEC.Application/EventsCEC.Application.csproj ./src/EventsCEC.Application/
+COPY ./src/EventsCEC.Domain/EventsCEC.Domain.csproj ./src/EventsCEC.Domain/
+COPY ./src/EventsCEC.Infra.Data/EventsCEC.Infra.Data.csproj ./src/EventsCEC.Infra.Data/
+COPY ./src/EventsCEC.Infra.IoC/EventsCEC.Infra.IoC.csproj ./src/EventsCEC.Infra.IoC/
 RUN dotnet restore
 
 # Build and publish a release
