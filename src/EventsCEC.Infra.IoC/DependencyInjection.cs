@@ -21,6 +21,8 @@ namespace EventsCEC.Infra.IoC
 
             services.AddScoped<IAuthenticateService, AuthenticateService>();
             services.AddScoped<IUserManagerService, UserManagerService>();
+            services.AddScoped<IEventoService, EventoService>();
+            services.AddScoped<IConvidadoService, ConvidadoService>();
 
             services.AddScoped<IAuthenticateRepository, AuthenticateRepository>();
             services.AddScoped<IUserManagerRepository, UserManagerRepository>();

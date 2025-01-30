@@ -1,5 +1,6 @@
 ﻿using EventsCEC.Domain.Entities;
 using EventsCEC.Domain.Identity;
+using EventsCEC.Infra.Data.EntityConfiguration;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +13,8 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         #region [Configurations]
+        modelBuilder.ApplyConfiguration(new EventoConfig());
+        modelBuilder.ApplyConfiguration(new ConvidadoConfig());
         #endregion
 
         base.OnModelCreating(modelBuilder);

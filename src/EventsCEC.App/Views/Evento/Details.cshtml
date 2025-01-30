@@ -1,0 +1,44 @@
+﻿@model EventsCEC.Application.ViewModels.EventoViewModel
+
+<div class="row">
+    <div class="col-md-12 gid-margin strecth-card">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Categoria</h2>
+                <div class="mb-3 row">
+                    <div class="col-sm-12">
+                        <label class="text-uppercase">Titulo:</label>
+                        <label for="Titulo" class="text-muted ml-2"> @Model.Titulo</label>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <div class="col-sm-12">
+                        <label class="text-uppercase">Descrição:</label>
+                        <label for="Descricao" class="text-muted ml-2"> @Model.Descricao</label>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <div class="col-sm-12">
+                        <label class="text-uppercase">Valor Inteira:</label>
+                        <label for="ValorInteira" class="text-muted ml-2"> @Model.ValorInteira</label>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <div class="col-sm-12">
+                        <label class="text-uppercase">Valor Meia:</label>
+                        <label for="ValorMeia" class="text-muted ml-2"> @Model.ValorMeia</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-1 d-grid float-left">
+                        <a asp-action="Index" class="btn btn-lg btn-primary">Voltar</a>
+                    </div>
+                    <div class="col-sm-9"> </div>
+                    <div class="col-sm-1 d-grid">
+                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-lg btn-primary">Edit</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

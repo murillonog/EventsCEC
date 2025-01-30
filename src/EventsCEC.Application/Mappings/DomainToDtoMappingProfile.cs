@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EventsCEC.Application.Dtos;
 using EventsCEC.Application.ViewModels;
+using EventsCEC.Domain.Entities;
 using EventsCEC.Domain.Identity;
 
 namespace EventsCEC.Application.Mappings;
@@ -9,6 +10,8 @@ public class DomainToDtoMappingProfile : Profile
 {
     public DomainToDtoMappingProfile()
     {
+        CreateMap<EventoViewModel, Evento>().ReverseMap();
+        CreateMap<ConvidadoViewModel, Convidado>().ReverseMap();
         CreateMap<RegisterViewModel, UserRegisterDto>();
 
         CreateMap<ApplicationUser, UserRegisterDto>().ReverseMap();

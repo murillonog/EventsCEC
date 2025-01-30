@@ -1,0 +1,62 @@
+﻿@model EventsCEC.Application.ViewModels.ConvidadoViewModel
+
+<div class="row">
+    <div class="col-md-12 gid-margin strecth-card">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Subcategoria</h2>
+                <div class="mb-3 row">
+                    <div class="col-sm-12">
+                        <label class="text-uppercase">Evento:</label>
+                        <label for="Evento" class="text-muted ml-2"> @Model.Evento.Titulo</label>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <div class="col-sm-12">
+                        <label class="text-uppercase">Nome:</label>
+                        <label for="Nome" class="text-muted ml-2"> @Model.Nome</label>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <div class="col-sm-12">
+                        <label class="text-uppercase">Email:</label>
+                        <label for="Email" class="text-muted ml-2"> @Model.Email</label>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <div class="col-sm-12">
+                        <label class="text-uppercase">Telefone:</label>
+                        <label for="Telefone" class="text-muted ml-2"> @Model.Telefone</label>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <div class="col-sm-12">
+                        <label class="text-uppercase">Idade:</label>
+                        <label for="Idade" class="text-muted ml-2"> @Model.Idade</label>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <div class="col-sm-12">
+                        <label class="text-uppercase">Meia:</label>
+                        <label for="Meia" class="text-muted ml-2"> @Model.Meia</label>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <div class="col-sm-12">
+                        <label class="text-uppercase">Pago:</label>
+                        <label for="Pago" class="text-muted ml-2"> @Model.Pago</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-1 d-grid float-left">
+                        <a asp-action="Index" class="btn btn-lg btn-primary">Voltar</a>
+                    </div>
+                    <div class="col-sm-9"> </div>
+                    <div class="col-sm-1 d-grid">
+                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-lg btn-primary">Edit</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

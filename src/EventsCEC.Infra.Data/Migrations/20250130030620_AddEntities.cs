@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EventsCEC.Infra.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialConfig : Migration
+    public partial class AddEntities : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -50,6 +50,26 @@ namespace EventsCEC.Infra.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Evento",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Titulo = table.Column<string>(type: "text", nullable: false),
+                    Descricao = table.Column<string>(type: "text", nullable: false),
+                    ValorInteira = table.Column<decimal>(type: "numeric", nullable: false),
+                    ValorMeia = table.Column<decimal>(type: "numeric", nullable: false),
+                    Responsaveis = table.Column<string>(type: "text", nullable: false),
+                    CreatedBy = table.Column<string>(type: "character varying(50)", unicode: false, maxLength: 50, nullable: false),
+                    Created = table.Column<DateTime>(type: "timestamp", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "character varying(50)", unicode: false, maxLength: 50, nullable: true),
+                    Modified = table.Column<DateTime>(type: "timestamp", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Evento", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -158,6 +178,34 @@ namespace EventsCEC.Infra.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Convidado",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Nome = table.Column<string>(type: "text", nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: false),
+                    Telefone = table.Column<string>(type: "text", nullable: false),
+                    Idade = table.Column<int>(type: "integer", nullable: false),
+                    Meia = table.Column<bool>(type: "boolean", nullable: false),
+                    Pago = table.Column<bool>(type: "boolean", nullable: false),
+                    Token = table.Column<Guid>(type: "uuid", nullable: false),
+                    EventoId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedBy = table.Column<string>(type: "character varying(50)", unicode: false, maxLength: 50, nullable: false),
+                    Created = table.Column<DateTime>(type: "timestamp", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "character varying(50)", unicode: false, maxLength: 50, nullable: true),
+                    Modified = table.Column<DateTime>(type: "timestamp", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Convidado", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Convidado_To_Evento_EventoId",
+                        column: x => x.EventoId,
+                        principalTable: "Evento",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -194,6 +242,11 @@ namespace EventsCEC.Infra.Data.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Convidado_EventoId",
+                table: "Convidado",
+                column: "EventoId");
         }
 
         /// <inheritdoc />
@@ -215,10 +268,16 @@ namespace EventsCEC.Infra.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Convidado");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Evento");
         }
     }
 }
