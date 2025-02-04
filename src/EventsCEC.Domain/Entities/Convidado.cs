@@ -8,7 +8,7 @@ public class Convidado : EntityBase
     public int Idade { get; set; }
     public bool Meia { get; set; }
     public bool Pago { get; set; }
-    public Guid Token { get; set; }
+    public Guid? Token { get; set; }
     public Guid EventoId { get; set; }
     public Evento Evento { get; set; }
 }

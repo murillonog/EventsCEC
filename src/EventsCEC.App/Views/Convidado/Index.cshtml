@@ -9,15 +9,13 @@
     <div class="card-body">
         <form asp-controller="Convidado" asp-action="Index" method="post" class="form-horizontal">
             <div class="row">
-                <div class="col-4">
+                <div class="col-11">
                     <select name="EventoId" id="eventoId" class="form-control" asp-items="ViewBag.EventoId">
                         <option value="" selected>Selecione um evento</option>
                     </select>
                 </div>
-                <div class="col-6">
-                </div>
-                <div class="col-2">
-                    <button type="submit" class="btn btn-primary float-right" role="button"><i class="ti-search"></i> Filtrar</button>
+                <div class="col-1 d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary float-right" role="button" style="width:100% !important"><i class="ti-search"></i> </button>
                 </div>
             </div>
         </form>
@@ -30,8 +28,11 @@
             <div class="col-10">
                 <h4 class="card-title">Convidados</h4>
             </div>
-            <div class="col-2">
-                <a asp-action="Edit" class="btn btn-primary float-right" role="button"><i class="ti-plus"></i> Novo</a>
+            <div class="col-1 d-flex">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#importModal" style="width:100% !important"><i class="ti-upload"></i> </button>
+            </div>
+            <div class="col-1 d-flex">
+                <a asp-action="Edit" class="btn btn-primary" role="button" style="width:100% !important"><i class="ti-plus"></i> </a>
             </div>
         </div>
         <div class="row">
@@ -40,23 +41,23 @@
                     <table id="order-listing" class="table">
                         <thead>
                             <tr>
-                                <th scope="col" style="width:5%  !important;">#</th>
-                                <th scope="col" style="width:10% !important;">Evento</th>
-                                <th scope="col" style="width:20% !important;">Nome</th>
-                                <th scope="col" style="width:20% !important;">Email</th>
-                                <th scope="col" style="width:10% !important;">Telefone</th>
-                                <th scope="col" style="width:10% !important;">Idade</th>
-                                <th scope="col" style="width:5% !important;">Meia</th>
+                                <th scope="col" style="width:2%  !important;">#</th>
+                                <th scope="col" style="width:17% !important;">Evento</th>
+                                <th scope="col" style="width:22% !important;">Nome</th>
+                                <th scope="col" style="width:22% !important;">Email</th>
+                                <th scope="col" style="width:5% !important;">Telefone</th>
+                                <th scope="col" style="width:5% !important;">Idade</th>
                                 <th scope="col" style="width:5% !important;">Pago</th>
                                 <th scope="col" style="width:15% !important;">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @if (Model.Count > 0)
+                            @if (Model != null && Model.Count > 0)
                             {
                                 foreach (var item in Model)
                                 {
                                     contador++;
+                                    string pago = item.Pago ? "Sim" : "Não";
                                     <tr>
                                         <th scope="row">@contador</th>
                                         <td>@item.Evento?.Titulo</td>
@@ -64,8 +65,7 @@
                                         <td>@item.Email</td>
                                         <td>@item.Telefone</td>
                                         <td>@item.Idade</td>
-                                        <td>@item.Meia</td>
-                                        <td>@item.Pago</td>
+                                        <td>@pago</td>
                                         <td>
                                             <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary" role="button">
                                                 <i class="ti-eye"></i>
@@ -76,25 +76,28 @@
                                             <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-primary" role="button">
                                                 <i class="ti-trash"></i>
                                             </a>
+                                            <button asp-route-id="@item.Id" class="btn btn-primary btn-download" data-filename="@item.Nome" data-token="@item.Id" role="button">
+                                                <i class="ti-download"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                 }
                             }
                             else
                             {
-                                <tr class="text-center">
-                                    <th class="text-center">
+                                <tr>
+                                    <td colspan="9" class="text-center">
                                         Não foram encontrados convidados cadastrados
-                                    </th>
+                                    </td>
                                 </tr>
                             }
-                            
+
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-        @if (Model.TotalPages > 0)
+        @if (Model != null && Model.TotalPages > 0)
         {
             <div class="row">
                 <div class="pager">
@@ -122,4 +125,88 @@
             </div>
         }
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="importModalLabel">Importar Arquivo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Formulário de upload -->
+                    <form asp-action="Upload" method="post" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <select name="EventoId" id="eventoId" class="form-control" asp-items="ViewBag.EventoId">
+                                <option value="" selected>Selecione um evento</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fileInput" class="form-label">Selecione o arquivo</label>
+                            <input type="file" class="form-control" id="fileInput" name="file" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Exibe mensagens de sucesso ou erro -->
+    @if (ViewBag.Message != null)
+    {
+        <div class="alert alert-success mt-3">
+            @ViewBag.Message
+        </div>
+    }
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger mt-3">
+            <ul>
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
 </div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Adiciona um evento de clique para todos os botões de download
+            document.querySelectorAll('.btn-download').forEach(button => {
+                button.addEventListener('click', function () {
+                    const fileName = this.getAttribute('data-filename');
+                    const token = this.getAttribute('data-token');
+
+                    // Faz uma requisição assíncrona para baixar o arquivo
+                    fetch(`/Convidado/Download?filename=${fileName}&token=${token}`)
+                        .then(response => {
+                            if (response.ok) {
+                                return response.blob();
+                            }
+                            throw new Error('Erro ao baixar o arquivo.');
+                        })
+                        .then(blob => {
+                            // Cria um link temporário para iniciar o download
+                            const url = window.URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.href = url;
+                            a.download = fileName;
+                            document.body.appendChild(a);
+                            a.click();
+                            document.body.removeChild(a);
+                            window.URL.revokeObjectURL(url);
+                        })
+                        .catch(error => {
+                            alert(error.message);
+                        });
+                });
+            });
+        });
+    </script>
+}

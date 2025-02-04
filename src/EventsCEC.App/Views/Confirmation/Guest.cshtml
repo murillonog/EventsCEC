@@ -1,0 +1,64 @@
+﻿@model EventsCEC.Application.ViewModels.ConvidadoViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscrição Confirmada</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Estilo para centralizar o conteúdo */
+        body, html {
+          height: 100%;
+          margin: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: #f8f9fa;
+        }
+
+        /* Estilo para o círculo verde */
+        .confirmation-circle {
+          width: 100px;
+          height: 100px;
+          border-radius: 50%;
+          background-color: #28a745;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin: 0 auto 20px;
+        }
+
+        /* Estilo para o "V" dentro do círculo */
+        .confirmation-circle .checkmark {
+          color: white;
+          font-size: 50px;
+          font-weight: bold;
+        }
+
+        /* Estilo para a mensagem de confirmação */
+        .confirmation-message {
+          text-align: center;
+          font-size: 24px;
+          color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="confirmation-container">
+        <!-- Círculo verde com "V" -->
+        <div class="confirmation-circle">
+            <span class="checkmark">✓</span>
+        </div>
+
+        <!-- Mensagem de confirmação -->
+        <div class="confirmation-message">
+            Inscrição confirmada com sucesso!<br />
+            Seja bem-vindo<br /> @Model.Nome
+        </div>
+    </div>
+</body>
+</html>

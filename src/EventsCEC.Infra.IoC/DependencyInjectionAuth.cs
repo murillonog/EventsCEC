@@ -27,6 +27,7 @@ public static class DependencyInjectionAuth
         services.AddAuthentication(options =>
         {
             options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
         })
         .AddCookie(options =>
         {

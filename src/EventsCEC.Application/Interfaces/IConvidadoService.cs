@@ -13,4 +13,5 @@ public interface IConvidadoService
     Task<ConvidadoViewModel> Add(ConvidadoViewModel convidadoViewModel);
     Task<ConvidadoViewModel> Update(Guid id, ConvidadoViewModel convidadoViewModel);
     Task Delete(Guid id);
+    Task<byte[]> GetQrCode(Guid token);
 }

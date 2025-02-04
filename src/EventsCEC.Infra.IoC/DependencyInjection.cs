@@ -1,9 +1,11 @@
 ﻿using EventsCEC.Application.Interfaces;
 using EventsCEC.Application.Mappings;
 using EventsCEC.Application.Services;
+using EventsCEC.Domain.Identity;
 using EventsCEC.Domain.Repositories;
 using EventsCEC.Infra.Data.Context;
 using EventsCEC.Infra.Data.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

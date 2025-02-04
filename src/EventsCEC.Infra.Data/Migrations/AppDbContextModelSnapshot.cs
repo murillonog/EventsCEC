@@ -69,7 +69,7 @@ namespace EventsCEC.Infra.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("Token")
+                    b.Property<Guid?>("Token")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");

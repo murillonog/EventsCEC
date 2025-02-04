@@ -3,12 +3,12 @@ using EventsCEC.Application.Dtos;
 using EventsCEC.Application.Interfaces;
 using EventsCEC.Application.ViewModels;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace EventsCEC.App.Controllers;
-
 public class AuthenticationController : Controller
 {
     private readonly IMapper _mapper;
@@ -25,6 +25,7 @@ public class AuthenticationController : Controller
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> Login(string? returnUrl)
     {
         var providers = await _authenticationService.GetExternalAuthenticationSchemesAsync();
@@ -33,6 +34,7 @@ public class AuthenticationController : Controller
     }
 
     [HttpPost]
+    [AllowAnonymous]
     public async Task<IActionResult> Login(LoginViewModel loginViewModel)
     {
         var result = await _authenticationService.Authenticate(loginViewModel.Email, loginViewModel.Password);
@@ -53,12 +55,14 @@ public class AuthenticationController : Controller
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public IActionResult Register()
     {
         return View();
     }
 
     [HttpPost]
+    [AllowAnonymous]
     public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
     {
         var userRegister = _mapper.Map<UserRegisterDto>(registerViewModel);
@@ -71,7 +75,7 @@ public class AuthenticationController : Controller
 
         return View(registerViewModel);
     }
-
+    [AllowAnonymous]
     public async Task<IActionResult> Logout()
     {
         await _authenticationService.Logout();
@@ -88,6 +92,7 @@ public class AuthenticationController : Controller
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> ExternalLoginCallback(string provider, string? returnUrl)
     {
         var result = await HttpContext.AuthenticateAsync(IdentityConstants.ExternalScheme);

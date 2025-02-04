@@ -26,11 +26,8 @@ app.UseRouting();
 
 SeedUserRoles(app);
 
-app.UseAuthentication();
-app.UseAuthorization();
-
-
-app.UseAuthorization();
+app.UseAuthentication(); // Habilita a autenticação
+app.UseAuthorization();  // Habilita a autorização
 
 app.MapControllerRoute(
     name: "default",
